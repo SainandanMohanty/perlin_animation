@@ -1,18 +1,18 @@
 function setup() {
     createCanvas(windowWidth, windowHeight);
     frameRate();
-    n = 16;
+    n = 32;
     initialise(n);
 }
 
 function draw() {
-    background('#2c3e50');
+    background(44, 62, 80);
     
     calcPosition();
     
     for(i = 0; i< n; i++) {
-        for(j = 1; j < n; j++) {
-            drawLink(i, (i + j) % n);
+        for(j = (i + 1); j < n; j++) {
+            drawLink(i, j);
         }
     }
     
@@ -33,7 +33,7 @@ function initialise() {
     for(i = 0; i < n; i++) {
         arOff[i] = [];
         for(j = 0; j < 2; j++) {
-            arOff[i][j] = random(100);
+            arOff[i][j] = random(1000);
         }
     }
 }
@@ -43,23 +43,26 @@ function calcPosition() {
     arPos = [];
     for(i = 0; i < n; i++) {
         arPos[i] = [];
-        arPos[i][0] = noise(arOff[i][0]) * width;
-        arPos[i][1] = noise(arOff[i][1]) * height;    
+        arPos[i][0] = map(noise(arOff[i][0]), 1/4, 3/4, 0, width);
+        arPos[i][1] = map(noise(arOff[i][1]), 1/4, 3/4, 0, height);    
     }
 }
 
 function drawLink(h, k) {
     //draws a link between two nodes
-    stroke('#ecf0f1');
-    strokeWeight(0.5);
+    windowDiagonal = dist(0, 0, width, height);
+    proximity = 1 / dist(arPos[h][0], arPos[h][1], arPos[k][0], arPos[k][1]);
+    
+    stroke(236, 240, 241, proximity * windowDiagonal);
+    strokeWeight(min(proximity * windowDiagonal / 32, 16));
     line(arPos[h][0], arPos[h][1], arPos[k][0], arPos[k][1]);
 }
 
 function drawNode(x, y) {
     //draws a node using co-ordinates from arPos[]
     noStroke();
-    fill('#e74c3c');
-    ellipse(x, y, 10, 10);    
+    fill(231, 76, 60);
+    ellipse(x, y, 8, 8);    
 }
 
 function increment(inc) {
