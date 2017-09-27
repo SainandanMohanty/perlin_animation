@@ -55,7 +55,7 @@ function drawLink(h, k) {
     proximity = 1 / dist(arPos[h][0], arPos[h][1], arPos[k][0], arPos[k][1]);
 
     stroke(236, 240, 241, proximity * windowDiagonal * 2);
-    strokeWeight(min(proximity * windowDiagonal / 32, 16));
+    strokeWeight(min(proximity * windowDiagonal / 32, 4));
     line(arPos[h][0], arPos[h][1], arPos[k][0], arPos[k][1]);
 }
 
@@ -63,7 +63,7 @@ function drawNode(x, y) {
     //draws a node using co-ordinates from arPos[]
     noStroke();
     fill(231, 76, 60);
-    ellipse(x, y, 8, 8);
+    ellipse(x, y, 4, 4);
 }
 
 function increment(inc) {
